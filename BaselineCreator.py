@@ -317,9 +317,14 @@ def pipelineanalysis(
                     )
                 )
         cmd = (
-            f"singularity exec -B {mount_paras} {image} "
             f"""awk -F "\\t" -v OFS="\\t" 'NR>1{{print $1,$2,$2,$3,$4,$5,$6,$7,$8,$9,$10}}' """
-            f"{pydir}/docs/GRCh38.microsatellites.tsv|bedtools intersect -a - -b "
+            f"{pydir}/docs/GRCh38.microsatellites.tsv >{outd}/zz.msi.tsv.nohead1"
+        )
+        print(cmd)
+        os.system(cmd)
+        cmd = (
+            f"singularity exec -B {mount_paras} {image} "
+            f"bedtools intersect -a {outd}/zz.msi.tsv.nohead1 -b "
             f"{outd}/zz.region.bed -wa |cut -f 1,3- >{outd}/zz.msi.tsv.nohead"
         )
         print(cmd)
@@ -339,7 +344,7 @@ def pipelineanalysis(
         )
         print(cmd)
         os.system(cmd)
-    os.system(f"rm -f {outd}/zz.* ")
+    # os.system(f"rm -f {outd}/zz.* ")
     if autoremove:
         midfile = Path(f"{outd}/Mid-files")
         if midfile.exists():
