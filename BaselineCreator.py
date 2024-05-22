@@ -248,7 +248,13 @@ def turn_primer_to_region(primerbed, outd, mount_paras, image):
                 exit()
     cmd = (
         f"singularity exec -B {mount_paras} {image} "
-        f"bedtools sort -i {outd}/zz.region.xls|bedtools merge > {outd}/zz.region.bed"
+        f"bedtools sort -i {outd}/zz.region.xls > {outd}/zz.region.bed1"
+    )
+    print(cmd)
+    os.system(cmd)
+    cmd = (
+        f"singularity exec -B {mount_paras} {image} "
+        f"bedtools merge -i {outd}/zz.region.bed1 > {outd}/zz.region.bed"
     )
     print(cmd)
     os.system(cmd)
@@ -273,7 +279,7 @@ def pipelineanalysis(
         f"--configfile {outd}/Baseline_config.yaml --cores {threads} --rerun-incomplete "
         f"-d {outd}/Mid-files -q progress --use-conda --printshellcmds"
     )
-    print(cmd)
+    # print(cmd)
     os.system(cmd)
     bam_str = ""
     for fq in fq_lis:
