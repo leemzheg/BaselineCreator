@@ -38,8 +38,8 @@ def argparse_line():
     required.add_argument(
         "-fq-prefix",
         metavar="STR",
-        help="    Specify fastq prefix to be analyzed(can be many, delimited by space)\n"
-        "    [eg: '0101-XXX-M3-A1_1.fq.gz' prefix is '0101-XXX-M3-A1']",
+        help="    Specify fastq prefix to be analyzed(the more healthy samples, the better. \n"
+        "    delimited by space) [eg: '0101-XXX-M3-A1_1.fq.gz' prefix is '0101-XXX-M3-A1']",
         required=True,
         nargs="+",
     )
