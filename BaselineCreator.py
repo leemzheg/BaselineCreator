@@ -250,13 +250,13 @@ def turn_primer_to_region(primerbed, outd, mount_paras, image):
         f"singularity exec -B {mount_paras} {image} "
         f"bedtools sort -i {outd}/zz.region.xls > {outd}/zz.region.bed1"
     )
-    print(cmd)
+    # print(cmd)
     os.system(cmd)
     cmd = (
         f"singularity exec -B {mount_paras} {image} "
         f"bedtools merge -i {outd}/zz.region.bed1 > {outd}/zz.region.bed"
     )
-    print(cmd)
+    # print(cmd)
     os.system(cmd)
 
 
@@ -291,13 +291,13 @@ def pipelineanalysis(
             f"cnvkit.py target {outd}/zz.region.bed --annotate {pydir}/docs/refFlat.txt "
             f"-o {outd}/zz.tmp.bait 2> {outd}/zz.log"
         )
-        print(cmd)
+        # print(cmd)
         os.system(cmd)
         cmd = (
             f"python3 {pydir}/bin/mark_bed_cnvfusion.py --input {outd}/zz.tmp.bait --cnv-gene "
             f"{pydir}/docs/general_CNVgene.txt --output {outd}/zz.tmp.bait.bed"
         )
-        print(cmd)
+        # print(cmd)
         os.system(cmd)
         cmd = (
             f"singularity exec -B {mount_paras} {image} "
@@ -306,7 +306,7 @@ def pipelineanalysis(
             f"-d {outd}/Mid-files/CNVcalling --output-reference {outd}/{baselinename} "
             f"2> {outd}/zz.log"
         )
-        print(cmd)
+        # print(cmd)
         os.system(cmd)
     else:
         with open(f"{outd}/zz.configure.xls", "w") as fi:
@@ -320,31 +320,31 @@ def pipelineanalysis(
             f"""awk -F "\\t" -v OFS="\\t" 'NR>1{{print $1,$2,$2,$3,$4,$5,$6,$7,$8,$9,$10}}' """
             f"{pydir}/docs/GRCh38.microsatellites.tsv >{outd}/zz.msi.tsv.nohead1"
         )
-        print(cmd)
+        # print(cmd)
         os.system(cmd)
         cmd = (
             f"singularity exec -B {mount_paras} {image} "
             f"bedtools intersect -a {outd}/zz.msi.tsv.nohead1 -b "
             f"{outd}/zz.region.bed -wa |cut -f 1,3- >{outd}/zz.msi.tsv.nohead"
         )
-        print(cmd)
+        # print(cmd)
         os.system(cmd)
         cmd = f"head -n 1 {pydir}/docs/GRCh38.microsatellites.tsv|cat - {outd}/zz.msi.tsv.nohead >{outd}/zz.msi.tsv"
-        print(cmd)
+        # print(cmd)
         os.system(cmd)
         cmd = (
             f"singularity exec -B {mount_paras} {image} "
             f"msisensor-pro baseline -d {outd}/zz.msi.tsv "
             f"-i {outd}/zz.configure.xls -o {outd}/Mid-files/MSIcalling -c 15 1> {outd}/zz.log"
         )
-        print(cmd)
+        # print(cmd)
         os.system(cmd)
         cmd = (
             f"cp  {outd}/Mid-files/MSIcalling/zz.msi.tsv_baseline {outd}/{baselinename}"
         )
-        print(cmd)
+        # print(cmd)
         os.system(cmd)
-    # os.system(f"rm -f {outd}/zz.* ")
+    os.system(f"rm -f {outd}/zz.* ")
     if autoremove:
         midfile = Path(f"{outd}/Mid-files")
         if midfile.exists():
