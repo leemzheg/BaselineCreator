@@ -286,6 +286,7 @@ def pipelineanalysis(
         bam_str += f"{outd}/Mid-files/{fq}/{fq}_deduplicated.bam "
     turn_primer_to_region(primerbed, outd, mount_paras, image)  # method
     if baselinetype == "CNV":
+        print("Making CNV baseline... ... ")
         cmd = (
             f"singularity exec -B {mount_paras} {image} "
             f"cnvkit.py target {outd}/zz.region.bed --annotate {pydir}/docs/refFlat.txt "
@@ -309,6 +310,7 @@ def pipelineanalysis(
         # print(cmd)
         os.system(cmd)
     else:
+        print("Making MSI baseline... ... ")
         with open(f"{outd}/zz.configure.xls", "w") as fi:
             for fq in fq_lis:
                 fi.write(
