@@ -12,7 +12,6 @@ singularity build AtomSeqTools_image_v2.8.sif docker://leemzheng/atomseqtools:v2
 - Need a config file, fill it out like this:
 ```
 Hg38_Fasta_Path=/PATH/to/GRCh38/hg38.fasta
-Fusion_data_library=/PATH/to/AtomSeqToolsDatabase/Fusion_library
 Variant_library=/PATH/to/AtomSeqToolsDatabase/Variant_library
 ```
 - If you have established AtomSeqTools hg38 alignment index before, ignore this step; else, using the command line:
