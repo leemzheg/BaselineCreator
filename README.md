@@ -2,6 +2,7 @@
 Create CNV/MSI Baseline from Healthy Individuals for AtomSeq
 
 ## Requirements
+- 10 or more healthy whole blood samples for CNVbaseline, 20 or more healthy whole blood samples for MSIbaseline
 - Only analyse for GRCh38/hg38
 - Singularity has been installed, [singularity user guide](https://docs.sylabs.io/guides/latest/user-guide/quick_start.html#quick-installation-steps) 
 - Downloaded AtomSeqToolsDatabase
